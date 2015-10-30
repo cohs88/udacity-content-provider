@@ -1,9 +1,13 @@
 package com.example.servando.dictionaryproviderudacity;
 
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.provider.UserDictionary;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,6 +15,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // get the textview
+        TextView dictionaryTextView = (TextView)findViewById(R.id.dictionary_text_view);
+
+        // obtener el content resolver que enviara el mensaje al content provide
+        ContentResolver contentResolver = getContentResolver();
+
+        // cursor con todos los records in la tabla Words
+        Cursor cursor = contentResolver.query(UserDictionary.Words.CONTENT_URI, null, null, null, null);
     }
 
     @Override
