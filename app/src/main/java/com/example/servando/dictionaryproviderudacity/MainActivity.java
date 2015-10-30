@@ -24,6 +24,40 @@ public class MainActivity extends AppCompatActivity {
 
         // cursor con todos los records in la tabla Words
         Cursor cursor = contentResolver.query(UserDictionary.Words.CONTENT_URI, null, null, null, null);
+
+
+        try {
+            dictionaryTextView.setText("The UserDictionary contains " + Integer.toString(cursor.getCount()) + " words\n");
+            dictionaryTextView.append("Columns " + UserDictionary.Words._ID + " - " + UserDictionary.Words.FREQUENCY + " - " + UserDictionary.Words.WORD + "\n");
+
+            //cursor.moveToNext();
+
+            int idColumnIndex = cursor.getColumnIndex(UserDictionary.Words._ID);
+            int frequencyColumnIndex = cursor.getColumnIndex(UserDictionary.Words.FREQUENCY);
+            int wordColumnIndex = cursor.getColumnIndex(UserDictionary.Words.WORD);
+
+            int idColumn = 0;
+            int frequencyColumn = 0;
+            String wordColumn = "";
+
+            while(cursor.moveToNext())
+            {
+                idColumn =  cursor.getInt(idColumnIndex);
+
+                frequencyColumn = cursor.getInt(frequencyColumnIndex);
+
+                wordColumn = cursor.getString(wordColumnIndex);
+
+                dictionaryTextView.append(Integer.toString(idColumn) + " " + Integer.toString(frequencyColumn) + " " + wordColumn + "\n");
+            }
+        }
+        catch (Exception ex)
+        {
+
+        }
+        finally {
+            cursor.close();
+        }
     }
 
     @Override
